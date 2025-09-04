@@ -1,5 +1,5 @@
 import React from "react";
-import { NavLink } from "react-router";
+import { Link } from "react-router";
 import {
   FaFacebookF,
   FaTwitter,
@@ -8,121 +8,96 @@ import {
 } from "react-icons/fa";
 
 const Footer = () => {
-  const footerLinks = [
-    { name: "Services", to: "/services" },
-    { name: "Coverage", to: "/coverage" },
-    { name: "About Us", to: "/about" },
-    { name: "Pricing", to: "/pricing" },
-    { name: "Be a Rider", to: "/rider" },
-  ];
+  const footerLinks = {
+    Product: [
+      { name: "Features", to: "/features" },
+      { name: "Integrations", to: "/integrations" },
+      { name: "Pricing", to: "/pricing" },
+      { name: "FAQ", to: "/faq" },
+    ],
+    Company: [
+      { name: "Privacy Policy", to: "/privacy" },
+      { name: "Terms of Service", to: "/terms" },
+    ],
+    Developers: [
+      { name: "Public API", to: "/api" },
+      { name: "Documentation", to: "/docs" },
+      { name: "Guides", to: "/guides" },
+    ],
+  };
 
   return (
-    <footer className="relative mt-10 bg-gradient-to-b from-emerald-700/30 via-green-600/20 to-emerald-900/30 backdrop-blur-2xl border-t border-emerald-400/30 shadow-[0_-4px_30px_rgba(16,185,129,0.2)] rounded-t-3xl overflow-hidden">
-      {/* Floating Glow */}
-      <div className="absolute -top-20 -right-20 w-60 h-60 bg-emerald-400/20 rounded-full blur-3xl"></div>
-      <div className="absolute -bottom-20 -left-20 w-60 h-60 bg-green-500/20 rounded-full blur-3xl"></div>
-
-      <div className="max-w-screen-xl mx-auto px-6 py-12 relative z-10">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
+    <footer className="relative bg-gradient-to-b from-green-500/20 via-emerald-400/20 to-green-600/20 backdrop-blur-xl border-t border-green-300/30 shadow-inner rounded-t-3xl mt-16">
+      <div className="max-w-7xl mx-auto px-6 lg:px-12 py-14">
+        <div className="flex flex-col lg:flex-row justify-between gap-12">
           {/* Brand */}
-          <div className="space-y-4 text-center md:text-left">
-            <NavLink
+          <div className="lg:w-1/3 text-center lg:text-left space-y-4">
+            <Link
               to="/"
-              className="flex items-center gap-4 justify-center md:justify-start space-x-2 text-2xl font-bold bg-gradient-to-r from-emerald-400 to-green-600 bg-clip-text text-transparent drop-shadow-sm"
+              className="flex justify-center lg:justify-start items-center gap-3 text-2xl font-bold bg-gradient-to-r from-green-700 to-emerald-500 bg-clip-text text-transparent"
             >
               <img
                 src="/assets/logo.png"
                 alt="ParcelPoint Logo"
-                className="h-10 drop-shadow-lg"
+                className="h-10 drop-shadow-md"
               />
               ParcelPoint
-            </NavLink>
-            <p className="text-sm text-green-600 leading-relaxed max-w-xs mx-auto md:mx-0">
-              Premium parcel delivery across Bangladesh with speed, care, and
-              modern coverage.
+            </Link>
+            <p className="text-sm text-green-900/80 leading-relaxed max-w-sm mx-auto lg:mx-0">
+              Fast, secure, and reliable parcel delivery across Bangladesh.
             </p>
           </div>
 
-          {/* Navigation */}
-          <div className="flex flex-col items-center md:items-start space-y-4">
-            <h4 className="text-lg font-semibold text-green-600 uppercase tracking-wide">
-              Quick Links
-            </h4>
-            <ul className="flex flex-col md:flex-row md:flex-wrap justify-center md:justify-start gap-3 md:gap-6 text-green-600 font-medium">
-              {footerLinks.map((link, index) => (
-                <li key={index} className="relative group">
-                  <NavLink
-                    to={link.to}
-                    className={({ isActive }) =>
-                      `transition-all duration-300 hover:text-green-800 ${
-                        isActive
-                          ? "text-green-200 font-semibold after:w-full"
-                          : "text-green-600"
-                      }`
-                    }
-                  >
-                    {link.name}
-                  </NavLink>
-                  {/* Underline animation */}
-                  <span className="absolute left-0 -bottom-1 w-0 h-[2px] bg-green-500 transition-all group-hover:w-full"></span>
-                </li>
-              ))}
-            </ul>
-          </div>
+          {/* Links */}
+          <div className="grid grid-cols-2 sm:grid-cols-3 gap-10 text-sm lg:w-2/3">
+            {Object.entries(footerLinks).map(([title, links], idx) => (
+              <div key={idx} className="space-y-4">
+                <h3 className="uppercase font-semibold text-green-900 tracking-wide">
+                  {title}
+                </h3>
+                <ul className="space-y-2">
+                  {links.map((link, i) => (
+                    <li key={i}>
+                      <Link
+                        to={link.to}
+                        className="hover:text-emerald-700 transition-colors"
+                      >
+                        {link.name}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
 
-          {/* Newsletter */}
-          <div className="flex flex-col items-center md:items-end space-y-3 w-full">
-            <h4 className="text-lg font-semibold text-green-600">
-              Stay Updated
-            </h4>
-            <p className="text-sm text-green-600 text-center md:text-right">
-              Subscribe to get the latest updates and offers.
-            </p>
-            <div className="flex flex-col sm:flex-row w-full max-w-xs gap-2">
-              <input
-                type="email"
-                placeholder="Enter your email"
-                className="flex-grow px-4 py-2 rounded-lg sm:rounded-l-xl bg-white/20 border border-emerald-400/30 text-green-50 placeholder-green-200/70 focus:outline-none focus:ring-2 focus:ring-emerald-400 backdrop-blur-md"
-              />
-              <button className="px-4 py-2 bg-gradient-to-r from-emerald-500 to-green-600 text-white font-medium rounded-lg sm:rounded-r-xl hover:from-emerald-600 hover:to-green-700 transition">
-                Subscribe
-              </button>
+            {/* Social Media */}
+            <div className="space-y-4">
+              <h3 className="uppercase font-semibold text-green-900 tracking-wide">
+                Social
+              </h3>
+              <div className="flex gap-4">
+                {[FaFacebookF, FaTwitter, FaInstagram, FaLinkedinIn].map(
+                  (Icon, idx) => (
+                    <a
+                      key={idx}
+                      href="#"
+                      className="w-9 h-9 flex items-center justify-center rounded-full bg-white/40 border border-green-300/40 text-green-700 hover:bg-emerald-200/50 transition"
+                    >
+                      <Icon size={16} />
+                    </a>
+                  )
+                )}
+              </div>
             </div>
           </div>
         </div>
 
         {/* Divider */}
-        <div className="border-t text-green-500 my-8"></div>
+        <div className="border-t border-green-300/30 my-8"></div>
 
-        {/* Bottom Bar */}
-        <div className="flex flex-col sm:flex-row items-center justify-between text-sm text-green-600 space-y-4 sm:space-y-0 flex-wrap gap-4">
-          <p>© {new Date().getFullYear()} ParcelPoint. All rights reserved.</p>
-          <div className="flex space-x-4">
-            <a
-              href="#"
-              className="w-9 h-9 flex items-center justify-center rounded-full bg-white/10 border border-emerald-300/30 hover:bg-emerald-400/30 transition text-green-600"
-            >
-              <FaFacebookF />
-            </a>
-            <a
-              href="#"
-              className="w-9 h-9 flex items-center justify-center rounded-full bg-white/10 border border-emerald-300/30 hover:bg-emerald-400/30 transition text-green-600"
-            >
-              <FaTwitter />
-            </a>
-            <a
-              href="#"
-              className="w-9 h-9 flex items-center justify-center rounded-full bg-white/10 border border-emerald-300/30 hover:bg-emerald-400/30 transition text-green-600"
-            >
-              <FaInstagram />
-            </a>
-            <a
-              href="#"
-              className="w-9 h-9 flex items-center justify-center rounded-full bg-white/10 border border-emerald-300/30 hover:bg-emerald-400/30 transition text-green-600"
-            >
-              <FaLinkedinIn />
-            </a>
-          </div>
+        {/* Bottom */}
+        <div className="text-center text-sm text-green-800">
+          © {new Date().getFullYear()} ParcelPoint. All rights reserved.
         </div>
       </div>
     </footer>

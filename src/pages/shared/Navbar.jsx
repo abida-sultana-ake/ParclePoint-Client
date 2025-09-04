@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router";
 import { GiHamburgerMenu } from "react-icons/gi";
-import { MdLogout, MdDashboard, MdSettings } from "react-icons/md";
+import { MdLogout, MdDashboard, MdContactPage } from "react-icons/md";
 import { FaMoneyBillWave } from "react-icons/fa";
 
 const Navbar = () => {
@@ -10,7 +10,7 @@ const Navbar = () => {
 
   // Dynamic nav links
   const navLinks = [
-    { name: "Services", to: "/services" },
+    { name: "Home", to: "/" },
     { name: "Coverage", to: "/coverage" },
     { name: "About Us", to: "/about" },
     { name: "Pricing", to: "/pricing" },
@@ -73,10 +73,10 @@ const Navbar = () => {
                   </li>
                   <li>
                     <Link
-                      to="/settings"
+                      to="/contact"
                       className="flex items-center px-4 py-2 hover:bg-emerald-100/40 rounded-lg transition"
                     >
-                      <MdSettings className="mr-2" /> Settings
+                      <MdContactPage className="mr-2" /> Contact Us
                     </Link>
                   </li>
                   <li>
