@@ -1,5 +1,6 @@
 import React from "react";
 import { motion } from "framer-motion";
+import Marquee from "react-fast-marquee";
 
 const Brands = () => {
   const brands = [
@@ -45,13 +46,19 @@ const Brands = () => {
         Trusted by Leading Brands
       </motion.h2>
 
-      {/* Logos - slider effect */}
-      <div className="relative z-10 flex flex-wrap justify-center items-center gap-10 md:gap-16">
+      {/* Marquee Logos */}
+      <Marquee
+        gradient={false}
+        speed={50}
+        pauseOnHover={true}
+        className="relative z-10 w-full"
+      >
         {brands.map((brand, index) => (
           <motion.div
             key={index}
-            className="flex justify-center items-center p-4 hover:shadow-2xl transition-shadow duration-300"
-            whileHover={{ scale: 1.15 }}
+            className="mx-10 flex justify-center items-center"
+            whileHover={{ scale: 1.2 }}
+            transition={{ type: "spring", stiffness: 200 }}
           >
             <img
               src={brand.logo}
@@ -60,7 +67,7 @@ const Brands = () => {
             />
           </motion.div>
         ))}
-      </div>
+      </Marquee>
 
       {/* Floating Gradient Blobs */}
       <motion.div
