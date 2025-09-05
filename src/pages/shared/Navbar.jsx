@@ -8,7 +8,9 @@ const Navbar = () => {
   const [userMenuOpen, setUserMenuOpen] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
-  // Dynamic nav links
+  // Example: user state (replace with your auth context/state)
+  const [user, setUser] = useState(null); 
+  
   const navLinks = [
     { name: "Home", to: "/" },
     { name: "Coverage", to: "/coverage" },
@@ -20,7 +22,7 @@ const Navbar = () => {
   return (
     <nav className="fixed top-0 left-0 w-full z-50 bg-gradient-to-r from-green-500/20 via-emerald-400/20 to-green-600/20 backdrop-blur-xl border-b border-green-300/30 shadow-lg">
       <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
-        {/* Logo Section */}
+        {/* Logo */}
         <Link
           to="/"
           className="flex items-center space-x-3 rtl:space-x-reverse"
@@ -37,65 +39,78 @@ const Navbar = () => {
 
         {/* Right Section */}
         <div className="flex items-center lg:order-2 space-x-3 lg:space-x-0 rtl:space-x-reverse relative">
-          {/* User Profile Dropdown */}
-          <div className="relative">
-            <button
-              type="button"
-              className="flex text-sm rounded-full focus:ring-2 focus:ring-emerald-400 hover:scale-105 transition"
-              onClick={() => setUserMenuOpen(!userMenuOpen)}
-            >
-              <span className="sr-only">Open user menu</span>
-              <img
-                className="w-9 h-9 rounded-full border border-emerald-300/50 shadow-md"
-                src="https://i.pinimg.com/736x/4e/22/be/4e22beef6d94640c45a1b15f4a158b23.jpg"
-                alt="user photo"
-              />
-            </button>
+          {user ? (
+            // User logged in → show profile dropdown
+            <div className="relative">
+              <button
+                type="button"
+                className="flex text-sm rounded-full focus:ring-2 focus:ring-emerald-400 hover:scale-105 transition"
+                onClick={() => setUserMenuOpen(!userMenuOpen)}
+              >
+                <span className="sr-only">Open user menu</span>
+                <img
+                  className="w-9 h-9 rounded-full border border-emerald-300/50 shadow-md"
+                  src="https://i.pinimg.com/736x/4e/22/be/4e22beef6d94640c45a1b15f4a158b23.jpg"
+                  alt="user photo"
+                />
+              </button>
 
-            {userMenuOpen && (
-              <div className="absolute right-0 mt-2 w-56 bg-white border border-green-200/40 rounded-xl shadow-xl ring-1 ring-emerald-300/30 divide-y divide-green-100 z-50">
-                <div className="px-4 py-3">
-                  <p className="text-sm font-medium text-green-900">
-                    Abida Sultana
-                  </p>
-                  <p className="text-sm text-green-700 truncate">
-                    abida@gmail.com
-                  </p>
+              {userMenuOpen && (
+                <div className="absolute right-0 mt-2 w-56 bg-white border border-green-200/40 rounded-xl shadow-xl ring-1 ring-emerald-300/30 divide-y divide-green-100 z-50">
+                  <div className="px-4 py-3">
+                    <p className="text-sm font-medium text-green-900">
+                      {user.name}
+                    </p>
+                    <p className="text-sm text-green-700 truncate">
+                      {user.email}
+                    </p>
+                  </div>
+                  <ul className="py-2 text-sm text-green-800">
+                    <li>
+                      <Link
+                        to="/dashboard"
+                        className="flex items-center px-4 py-2 hover:bg-emerald-100/40 rounded-lg transition"
+                      >
+                        <MdDashboard className="mr-2" /> Dashboard
+                      </Link>
+                    </li>
+                    <li>
+                      <Link
+                        to="/contact"
+                        className="flex items-center px-4 py-2 hover:bg-emerald-100/40 rounded-lg transition"
+                      >
+                        <MdContactPage className="mr-2" /> Contact Us
+                      </Link>
+                    </li>
+                    <li>
+                      <Link
+                        to="/earnings"
+                        className="flex items-center px-4 py-2 hover:bg-emerald-100/40 rounded-lg transition"
+                      >
+                        <FaMoneyBillWave className="mr-2" /> Earnings
+                      </Link>
+                    </li>
+                  </ul>
+                  <div className="py-2">
+                    <button
+                      onClick={() => setUser(null)} // simple logout example
+                      className="flex items-center w-full px-4 py-2 text-left text-red-600 hover:bg-red-100/40 rounded-lg transition"
+                    >
+                      <MdLogout className="mr-2" /> Sign out
+                    </button>
+                  </div>
                 </div>
-                <ul className="py-2 text-sm text-green-800">
-                  <li>
-                    <Link
-                      to="/dashboard"
-                      className="flex items-center px-4 py-2 hover:bg-emerald-100/40 rounded-lg transition"
-                    >
-                      <MdDashboard className="mr-2" /> Dashboard
-                    </Link>
-                  </li>
-                  <li>
-                    <Link
-                      to="/contact"
-                      className="flex items-center px-4 py-2 hover:bg-emerald-100/40 rounded-lg transition"
-                    >
-                      <MdContactPage className="mr-2" /> Contact Us
-                    </Link>
-                  </li>
-                  <li>
-                    <Link
-                      to="/earnings"
-                      className="flex items-center px-4 py-2 hover:bg-emerald-100/40 rounded-lg transition"
-                    >
-                      <FaMoneyBillWave className="mr-2" /> Earnings
-                    </Link>
-                  </li>
-                </ul>
-                <div className="py-2">
-                  <button className="flex items-center w-full px-4 py-2 text-left text-red-600 hover:bg-red-100/40 rounded-lg transition">
-                    <MdLogout className="mr-2" /> Sign out
-                  </button>
-                </div>
-              </div>
-            )}
-          </div>
+              )}
+            </div>
+          ) : (
+            // User not logged in → show Login button
+            <Link
+              to="/login"
+              className="px-4 py-2 rounded-lg bg-emerald-500 text-white hover:bg-emerald-600 transition"
+            >
+              Login
+            </Link>
+          )}
 
           {/* Mobile Menu Button */}
           <button
@@ -122,7 +137,6 @@ const Navbar = () => {
                 >
                   {link.name}
                 </Link>
-                {/* Animated underline for large screens */}
                 <span className="hidden lg:block absolute left-0 -bottom-1 w-0 h-[2px] bg-emerald-600 transition-all duration-300 group-hover:w-full"></span>
               </li>
             ))}
@@ -145,6 +159,17 @@ const Navbar = () => {
                     </Link>
                   </li>
                 ))}
+                {!user && (
+                  <li>
+                    <Link
+                      to="/login"
+                      onClick={() => setMobileMenuOpen(false)}
+                      className="block py-3 px-5 rounded-xl bg-emerald-500 text-white text-center hover:bg-emerald-600 transition-all duration-300"
+                    >
+                      Login
+                    </Link>
+                  </li>
+                )}
               </ul>
             </div>
           </div>
